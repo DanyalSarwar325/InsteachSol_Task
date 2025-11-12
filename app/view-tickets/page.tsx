@@ -28,13 +28,15 @@ export default function ViewTicketsPage() {
   // Function to handle the actual API deletion
   const executeDelete = async (id: string, loadingToastId: string) => {
     try {
-      const res = await fetch(`/api/tickets/${id}`, {
+      const res = await fetch(`/api/delete-ticket/${id}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
         setTickets((prevTickets) => prevTickets.filter((t) => t._id !== id));
-        toast.success("✅ Ticket deleted successfully!", { id: loadingToastId });
+        toast.success("✅ Ticket deleted successfully!", {
+          id: loadingToastId,
+        });
       } else {
         toast.error("❌ Failed to delete ticket", { id: loadingToastId });
       }
@@ -106,11 +108,11 @@ export default function ViewTicketsPage() {
         ) : (
           <div className="overflow-x-auto">
             {/* 👈 Added table-fixed class to prevent layout shifting */}
-            <table className="w-full border border-gray-200 rounded-lg table-fixed"> 
+            <table className="w-full border border-gray-200 rounded-lg table-fixed">
               <thead>
                 <tr className="bg-blue-900 text-white">
                   {/* 👈 Set widths to control column size and stability */}
-                  <th className="py-3 px-4 text-left w-1/5">Title</th> 
+                  <th className="py-3 px-4 text-left w-1/5">Title</th>
                   <th className="py-3 px-4 text-left w-2/5">Description</th>
                   <th className="py-3 px-4 text-left w-[10%]">Priority</th>
                   <th className="py-3 px-4 text-left w-[20%]">Created At</th>
@@ -144,9 +146,11 @@ export default function ViewTicketsPage() {
                     </td>
                     <td className="py-3 px-4 text-center space-x-3">
                       <button
-                        onClick={() => router.push(`/edit-ticket/${ticket._id}`)}
+                        onClick={() =>
+                          router.push(`/edit-ticket/${ticket._id}`)
+                        }
                         // Use light grey icon styling
-                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors" 
+                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
                         title="Edit Ticket"
                       >
                         <FaEdit size={20} /> {/* 👈 Removed 'Edit' text */}
@@ -154,10 +158,11 @@ export default function ViewTicketsPage() {
                       <button
                         onClick={() => handleDelete(ticket._id)}
                         // Use light grey icon styling
-                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors" 
+                        className="text-gray-400 hover:text-gray-600 p-1 transition-colors"
                         title="Delete Ticket"
                       >
-                        <FaTrashAlt size={20} /> {/* 👈 Removed 'Delete' text */}
+                        <FaTrashAlt size={20} />{" "}
+                        {/* 👈 Removed 'Delete' text */}
                       </button>
                     </td>
                   </tr>

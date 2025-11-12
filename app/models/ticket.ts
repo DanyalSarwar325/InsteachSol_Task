@@ -26,8 +26,6 @@ const ticketSchema = new mongoose.Schema(
       default: "Medium",
     },
 
-    
-
     createdAt: {
       type: Date,
       default: Date.now,
